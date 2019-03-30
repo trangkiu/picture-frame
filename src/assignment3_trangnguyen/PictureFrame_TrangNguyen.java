@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -176,38 +177,54 @@ public class PictureFrame_TrangNguyen extends Application {
         ToggleGroup textPosition = new ToggleGroup();
         RadioButton top = new RadioButton ("top");
         RadioButton center= new RadioButton ("center");
-//        RadioButton bottom = new RadioButton ("bottom");
-        textPosition.getToggles().addAll(top ,center);
+        RadioButton bottom = new RadioButton ("bottom");
+        textPosition.getToggles().addAll(top ,center, bottom);
         
         
         HBox pane5 = new HBox();
         pane5.setPadding(new Insets(0,0,0,20));
         pane5.setSpacing(10);
-        pane5.getChildren().addAll(top,center);
+        pane5.getChildren().addAll(top,center,bottom);
         onTheLeft.getChildren().add (pane5);
         
-        StackPane textPaneCenter = new StackPane();
-        Pane textPaneTop = new Pane();
+        
+
+        BorderPane textPaneCenter = new BorderPane();
+        
+        top.setOnAction(e->{ 
+            if (top.isSelected()){
+        textPaneCenter.getChildren().clear();
+         textPaneCenter.setPadding(new Insets(20,20,20,20));  
+          text = new Label(addText.getText());
+
+          textPaneCenter.setTop(text);
+          forPicture.getChildren().add(textPaneCenter);   
+            }
+        });
+        
         center.setOnAction(e->{
             if (center.isSelected()){
- 
-          textPaneTop.getChildren().clear();      
+          textPaneCenter.getChildren().clear();  
+          
           textPaneCenter.setPadding(new Insets(20,20,20,20));
           text = new Label(addText.getText());
-          textPaneCenter.getChildren().add(text);
+        textPaneCenter.setCenter(text);
+        forPicture.getChildren().add(textPaneCenter);   
+            }
+        });
+        
+        bottom.setOnAction(e->{ 
+            if (bottom.isSelected()){
+        textPaneCenter.getChildren().clear();
+        textPaneCenter.setPadding(new Insets(20,20,20,20));  
+          text = new Label(addText.getText());
+
+          textPaneCenter.setBottom(text);
           forPicture.getChildren().add(textPaneCenter);   
             }
         });
 
-        top.setOnAction(e->{ 
-            if (top.isSelected()){
-        textPaneCenter.getChildren().clear();
-         textPaneTop.setPadding(new Insets(20,20,20,20));  
-          text = new Label(addText.getText());
-          textPaneTop.getChildren().add(text);
-          forPicture.getChildren().add(textPaneTop);   
-            }
-        });
+        
        
         //Font size
         Label fntsz = new Label ("Font size (1-100)");
